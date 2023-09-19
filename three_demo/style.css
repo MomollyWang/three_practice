@@ -7,3 +7,30 @@ canvas {
 main {
   position: absolute;
 }
+
+body {
+  background: #081b29;
+}
+
+.home {
+  height: 60vh;
+  display:flex;
+  align-items: center;
+  padding: 0 10%;
+  font-family: "Lucida Console", "Courier New", monospace;
+
+}
+
+.home_content {
+  max-width: 600px;
+  color:#858585;
+}
+
+.home_content h1 {
+  font-size: 56px;
+  font-weight: 700;
+}
+
+.home_content p {
+  font-size: 26px;
+}

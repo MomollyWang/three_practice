@@ -76,8 +76,8 @@ function addStar() {
 Array(200).fill().forEach(addStar);
 
 // set up background
-const spaceTexture = new THREE.TextureLoader().load('paper.jpeg');
-scene.background = spaceTexture;
+// const spaceTexture = new THREE.TextureLoader().load('paper.jpeg');
+// scene.background = spaceTexture;
 
 // Scroll Animation
 
@@ -98,14 +98,9 @@ moveCamera();
 function animate() {
   requestAnimationFrame(animate);
 
-  torus.rotation.x += 0.01;
-  torus.rotation.y += 0.005;
-  torus.rotation.z += 0.01;
-
-  if (shibaModel) {
-    shibaModel.rotation.x += 0.01;
-    shibaModel.rotation.y += 0.005;
-  }
+  torus.rotation.x += 0.001;
+  torus.rotation.y += 0.001;
+  torus.rotation.z += 0.001;
 
   controls.update();
 
