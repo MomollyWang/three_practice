@@ -2,6 +2,7 @@ import './style.css'
 
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 // Setup
 
@@ -15,8 +16,10 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
-camera.position.setZ(30);
-camera.position.setX(-3);
+const cameraZ = 30;
+const cameraX = -3;
+camera.position.setZ(cameraZ);
+camera.position.setX(cameraX);
 
 renderer.render(scene, camera);
 
@@ -28,6 +31,18 @@ const material = new THREE.MeshStandardMaterial({ color: 0x7b03fc});
 const torus = new THREE.Mesh(geometry, material);
 
 scene.add(torus);
+
+// set up 3d puppy
+var shibaModel;
+const loader = new GLTFLoader();
+loader.load( 'shiba.glb', function ( gltf ) {
+  var shibaModel = gltf.scene;
+  scene.add(shibaModel);
+  shibaModel.position.set(0,0,30);
+  shibaModel.rotation.x += 0.01;
+}, undefined, function ( error ) {
+	console.error( error );
+} );
 
 // light setup
 
@@ -64,12 +79,33 @@ Array(200).fill().forEach(addStar);
 const spaceTexture = new THREE.TextureLoader().load('paper.jpeg');
 scene.background = spaceTexture;
 
+// Scroll Animation
+
+function moveCamera() {
+  const t = document.body.getBoundingClientRect().top;
+
+  camera.position.z = cameraZ + t * -0.02;
+  camera.position.x = cameraX + t * -0.005;
+  camera.rotation.y = t * -0.002;
+}
+
+document.body.onscroll = moveCamera;
+moveCamera();
+
+
+// rotation 
+
 function animate() {
   requestAnimationFrame(animate);
 
   torus.rotation.x += 0.01;
   torus.rotation.y += 0.005;
   torus.rotation.z += 0.01;
+
+  if (shibaModel) {
+    shibaModel.rotation.x += 0.01;
+    shibaModel.rotation.y += 0.005;
+  }
 
   controls.update();
 
